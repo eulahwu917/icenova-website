@@ -52,6 +52,21 @@ input:focus-visible{box-shadow:inset 0 0 0 3px rgba(229,0,45,.22)}
 .result address{margin-top:4px;color:#705158;font-size:13px;font-style:normal}
 .directions{color:var(--red);font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px;white-space:nowrap}
 .availability{margin:44px 0 0;padding-top:18px;border-top:1px solid rgba(38,8,14,.16);color:#876970;font-size:11px}
+@media(min-width:900px){
+  .visual{--scene:#26080e;background:var(--scene)}
+  .visual[data-scene="1"]{--scene:#2b090d}
+  .visual[data-scene="2"]{--scene:#642132}
+  .visual[data-scene="3"]{--scene:#5a2a12}
+  .visual[data-scene="4"]{--scene:#641a33}
+  .visual img{position:absolute;right:0;width:52%;height:100%;object-fit:cover}
+  .visual::after{left:45%;background:linear-gradient(90deg,var(--scene) 0%,rgba(38,8,14,.3) 35%,rgba(38,8,14,0) 100%)}
+  .scene-copy{left:5.5%;bottom:14%;width:40%;max-width:620px}
+  .scene-copy h1,.scene-copy h2{font-size:clamp(58px,5.3vw,104px);letter-spacing:-4.5px}
+  .scene-copy p{max-width:390px}
+  .world-progress{right:2.5%}
+  .scroll-note{right:3.4%}
+}
 @media(max-width:780px){.world-track{height:300vh}.stage{min-height:560px}.visual::after{background:linear-gradient(0deg,rgba(25,3,8,.72) 0%,rgba(25,3,8,.08) 62%)}.scene-copy{left:22px;right:50px;bottom:9%}.scene-copy h1,.scene-copy h2{font-size:clamp(58px,18vw,82px);letter-spacing:-4px}.scene-copy p{margin-top:14px;font-size:15px}.scroll-note{display:none}.locator{padding:50px 22px 62px}.locator-title,.search-area{grid-template-columns:1fr;gap:26px}.locator-title{padding-bottom:28px}.locator-title h2{font-size:58px;letter-spacing:-3px}.search-area{padding-top:28px}}
 @media(max-width:520px){.site-header{height:66px;padding:0 20px}.brand img{width:105px}.header-link{font-size:9px}.world-track{height:280vh}.stage{height:calc(100vh - 1px);min-height:520px}.visual img{object-position:center center}.scene-copy h1,.scene-copy h2{font-size:56px}.scene-copy p{max-width:310px}.search-row{grid-template-columns:1fr}.find{height:49px}.result{grid-template-columns:1fr;gap:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.visual,.scene-copy,.visual img{transition:none}}
+
