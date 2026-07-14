@@ -4,7 +4,7 @@
 
 ## Website
 
-- Canonical website: https://eulahwu917.github.io/icenova-website/
+- Canonical website: https://icenovausa.com/
 - Store locator: Search for retailers carrying icenova by ZIP code, city, state, address, or store name.
 
 ## Products featured
@@ -21,4 +21,3 @@ Write the brand as "icenova" in one lowercase word.
 ## Availability
 
 Retail availability can change. Visitors should contact a listed store before making a special trip.
-
