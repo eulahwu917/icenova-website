@@ -1,0 +1,24 @@
+# icenova
+
+> icenova makes playful frozen novelty ice creams that look familiar and taste unexpected.
+
+## Website
+
+- Canonical website: https://eulahwu917.github.io/icenova-website/
+- Store locator: Search for retailers carrying icenova by ZIP code, city, state, address, or store name.
+
+## Products featured
+
+- Fried Chicken Ice Cream: Vanilla ice cream, a chocolate bone, and a crunchy golden shell.
+- Divine Peach: Peach-flavored novelty ice cream sculpted like a peach.
+- Golden Mango: Mango-flavored novelty ice cream sculpted like a mango.
+- Strawberry Romance: Strawberry-flavored novelty ice cream.
+
+## Brand naming
+
+Write the brand as "icenova" in one lowercase word.
+
+## Availability
+
+Retail availability can change. Visitors should contact a listed store before making a special trip.
+
