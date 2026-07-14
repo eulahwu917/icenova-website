@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f1ed" />
+    <meta name="description" content="Meet icenova's frozen novelty ice creams and find a store near you." />
+    <meta property="og:title" content="icenova â€” Find a double take near you" />
+    <meta property="og:description" content="Frozen novelty ice creams that look familiar and taste unreal." />
+    <meta property="og:image" content="docs/assets/fried-chicken-lifestyle.jpg" />
+    <title>icenova â€” Find a store</title>
+    <link rel="icon" href="docs/assets/icenova-red-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="docs/styles.css" />
+    <script defer src="docs/store-data.js"></script>
+    <script defer src="docs/site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#find-icenova">Skip to store search</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="icenova home">
+        <img src="docs/assets/icenova-red-logo.png" alt="icenova" />
+      </a>
+      <a class="header-link" href="#find-icenova">Find a store</a>
+    </header>
+
+    <main id="top">
+      <section class="world-track" id="product-world" aria-label="Explore icenova products while scrolling">
+        <div class="stage">
+          <div class="visual is-active" data-scene="1">
+            <img src="docs/assets/fried-chicken-lifestyle.jpg" alt="icenova Fried Chicken Ice Cream package surrounded by fried chicken" fetchpriority="high" />
+          </div>
+          <div class="visual" data-scene="2">
+            <img src="docs/assets/peach-lifestyle.jpg" alt="icenova Divine Peach ice cream surrounded by peaches" />
+          </div>
+          <div class="visual" data-scene="3">
+            <img src="docs/assets/mango-lifestyle.jpg" alt="icenova Golden Mango ice cream surrounded by mangoes" />
+          </div>
+          <div class="visual" data-scene="4">
+            <img src="docs/assets/strawberry-lifestyle.jpg" alt="icenova Strawberry Romance ice cream surrounded by strawberries" />
+          </div>
+
+          <div class="scene-copy is-active" data-copy="1">
+            <small>Looks familiar. Tastes unreal.</small>
+            <h1>Fried Chicken?</h1>
+            <p>Vanilla ice cream, a chocolate bone, and a crunchy golden shell. Your eyes are not lying.</p>
+          </div>
+          <div class="scene-copy" data-copy="2">
+            <small>Fruit, with a plot twist.</small>
+            <h2>Divine Peach</h2>
+            <p>Juicy peach flavor, sculpted into a frozen double take.</p>
+          </div>
+          <div class="scene-copy" data-copy="3">
+            <small>Fruit, with a plot twist.</small>
+            <h2>Golden Mango</h2>
+            <p>Sun-ripe tropical creaminess in an unmistakable shape.</p>
+          </div>
+          <div class="scene-copy" data-copy="4">
+            <small>Fruit, with a plot twist.</small>
+            <h2>Strawberry Romance</h2>
+            <p>Sweet, bright, and almost too pretty to bite.</p>
+          </div>
+
+          <div class="world-progress" aria-hidden="true"><span class="is-active"></span><span></span><span></span><span></span></div>
+          <div class="scroll-note">Scroll to explore</div>
+        </div>
+      </section>
+
+      <section class="locator" id="find-icenova" aria-labelledby="locator-title">
+        <div class="locator-inner">
+          <div class="locator-title">
+            <h2 id="locator-title">Your next double take is nearby.</h2>
+            <p class="locator-intro">Search stores currently carrying <strong>icenova</strong>.</p>
+          </div>
+
+          <div class="search-area">
+            <form id="store-search" role="search">
+              <label for="store-query">ZIP code or city</label>
+              <div class="search-row">
+                <input id="store-query" name="location" type="search" placeholder="Try 97504 or Medford" autocomplete="postal-code" />
+                <button class="find" type="submit">Find stores</button>
+              </div>
+              <p class="search-note">Search by ZIP code, city, state, address, or store name.</p>
+            </form>
+            <div class="results" id="store-results" aria-live="polite"><p class="empty">Enter a location to see matching stores.</p></div>
+          </div>
+          <p class="availability">Product availability can change. Please contact the store before making a special trip.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
