@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eulahwu917.github.io/icenova-website/sitemap.xml
+Sitemap: https://icenovausa.com/sitemap.xml
 
