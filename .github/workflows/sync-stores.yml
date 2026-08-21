@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "scripts/sync-store-data.mjs"
+      - "scripts/fetch-store-csv.mjs"
+      - "tests/fetch-store-csv.test.mjs"
       - ".github/workflows/sync-stores.yml"
   schedule:
     - cron: "*/15 * * * *"
@@ -21,6 +23,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Check out website
         uses: actions/checkout@v4
@@ -29,6 +32,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Run tests
+        run: node --test tests/fetch-store-csv.test.mjs
 
       - name: Validate and generate store data
         run: node scripts/sync-store-data.mjs

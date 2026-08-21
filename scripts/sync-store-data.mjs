@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { fetchStoreCsv } from "./fetch-store-csv.mjs";
 
 const DEFAULT_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSRpT5Iulo2bhKAeMmGupCYOMpNpn-jqhVkI5d5c9EMhAfum896XiXxI1jDkj6ktIp4L56P9d4CEbao/pub?gid=1042853975&single=true&output=csv";
 const EXPECTED_HEADERS = ["store_id", "name", "banner", "address", "city", "state", "zip", "active", "notes", "last_updated"];
@@ -57,9 +58,7 @@ async function loadCsv() {
   const localFile = process.argv[2];
   if (localFile) return readFile(resolve(localFile), "utf8");
 
-  const response = await fetch(process.env.STORE_CSV_URL || DEFAULT_CSV_URL, { headers: { "user-agent": "icenova-store-sync/1.0" } });
-  if (!response.ok) throw new Error(`Google Sheet download failed with HTTP ${response.status}.`);
-  return response.text();
+  return fetchStoreCsv(process.env.STORE_CSV_URL || DEFAULT_CSV_URL);
 }
 
 async function existingStoreCount() {
