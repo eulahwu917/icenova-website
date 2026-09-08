@@ -1,11 +1,12 @@
 ---
 title: Mirror site.js custom events to Meta + TikTok pixels
-status: draft
+status: approved-locked
 class: B
 date: 2026-09-08
 author: Bepop
 context: IceNova - Meta/TikTok pixel install session
 supersedes: "not-built decision from pixel-install spec session (David: 'Do it', 2026-09-08 PM)"
+approvals: R1 t_a172e47f (NOT_APPROVED, 2 blockers) → R2 t_ff263440 APPROVED at 50a361a; residual patched in same pass
 ---
 
 # Spec: Mirror site.js custom events to Meta + TikTok pixels
@@ -100,12 +101,14 @@ The existing test assertions (`doesNotMatch /search_term\s*:/`,
    event call sites and the no-raw-query assertions still pass.
 2. **Executable fault-injection check (in addition to static asserts):** a
    small Node test loads `docs/site.js` in a controlled context
-   (`node:vm`) and exercises `trackEvent` with (a) `fbq`/`ttq` absent,
-   (b) `window.ttq = null`, (c) each vendor function throwing independently,
-   asserting in every case: no exception propagates, the OTHER vendor's
-   dispatch is still attempted, GA4 dispatch still runs, and (for the
-   store-search path) results still render. Static presence assertions alone
-   do not close this criterion.
+   (`node:vm`) and exercises `trackEvent` with (a) each SDK absent
+   separately (other healthy), (b) `window.ttq = null`, (c) each vendor
+   function throwing independently. Assert in every case: no exception
+   propagates, the OTHER vendor is attempted WHEN AVAILABLE (a vendor whose
+   SDK is absent is correctly skipped), GA4 dispatch still runs, and (for
+   the store-search path) results still render. With BOTH SDKs absent, both
+   vendor dispatches are skipped and nothing throws. Static presence
+   assertions alone do not close this criterion.
 3. `git diff main <branch> --stat` touches ONLY `docs/site.js` and
    `tests/analytics.test.mjs`; `node --test tests/*.test.mjs` passes with the
    extended assertions.
