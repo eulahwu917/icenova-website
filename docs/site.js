@@ -9,6 +9,12 @@
 
   const trackEvent = (name, parameters = {}) => {
     if (typeof window.gtag === "function") window.gtag("event", name, parameters);
+    try {
+      if (typeof window.fbq === "function") window.fbq("trackCustom", name, parameters);
+    } catch (error) { /* Meta SDK failure must not break GA4, TikTok, or page behavior */ }
+    try {
+      if (window.ttq && typeof window.ttq.track === "function") window.ttq.track(name, parameters);
+    } catch (error) { /* TikTok SDK failure must not break GA4, Meta, or page behavior */ }
   };
 
   const updateWorld = () => {
