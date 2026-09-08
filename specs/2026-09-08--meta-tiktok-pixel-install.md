@@ -18,7 +18,7 @@ in the same emails:
 
 | Pixel | ID | Provenance (verified occurrences) |
 |---|---|---|
-| Meta (Facebook) | `1785155876048905` | 3x: "Meta Pixel ID" headline p.1, `fbq('init', '…')` base code p.2 (2x) |
+| Meta (Facebook) | `1785155876048905` | 3x: "Meta Pixel ID" headline p.1, then `fbq('init', …)` and the noscript img URL p.2. Sources retained at `/srv/personal/inbox-desktop/icenova website pixel/` (`Meta PixelID.pdf`, `TikTok PixelID.pdf`). |
 | TikTok | `DAG7S7JC77U70STH6QGG` | 2x: "TikTok Pixel ID" headline p.1, `ttq.load('…')` base code p.2 |
 
 Strategy context (2026-09-04 daily ledger): agency advised optimizing for
@@ -36,26 +36,27 @@ untouched.
 
 ## Change
 
-Insert two vendor base-code blocks in `docs/index.html`, in this order, all in
-`<head>` immediately after the GA4 `</script>` (line 38):
+Insert two vendor base-code blocks in `docs/index.html`:
 
-1. Comment marker + Meta pixel base `<script>` (standard Meta base code:
-   `!function(f,b,e,v,n,t,s){…}` loader, `fbq('init', '1785155876048905')`,
-   `fbq('track', 'PageView')`).
+1. `<!-- Meta Pixel Code -->` … `<!-- End Meta Pixel Code -->` — Meta pixel
+   base `<script>` (standard Meta base code: `!function(f,b,e,v,n,t,s){…}`
+   loader, `fbq('init', '1785155876048905')`, `fbq('track', 'PageView')`),
+   placed in `<head>` immediately after the GA4 `</script>` (currently line 40,
+   before the `store-data.js` include at line 41).
 2. Meta `<noscript>` fallback `<img>` with
    `https://www.facebook.com/tr?id=1785155876048905&ev=PageView&noscript=1` —
-   placed immediately after the `<body>` open tag (line ~44), per Meta's
-   canonical install.
-3. Comment marker + TikTok pixel base code (standard TikTok loader IIFE with
-   `ttq.load('DAG7S7JC77U70STH6QGG')` and `ttq.page()`).
+   placed immediately inside `<body>` (currently opens at line 47) so the img
+   is HTML-valid; head placement of the base script follows Meta's published
+   install guide.
+3. `<!-- TikTok Pixel Code -->` … `<!-- End TikTok Pixel Code -->` — TikTok
+   pixel base code (standard TikTok loader IIFE with
+   `ttq.load('DAG7S7JC77U70STH6QGG')` and `ttq.page()`), in `<head>` after the
+   Meta block.
 
-Each block wrapped in vendor-conventional comments:
-`<!-- Meta Pixel Code -->` … `<!-- End Meta Pixel Code -->` and
-`<!-- TikTok Pixel Code -->` … `<!-- End TikTok Pixel Code -->`, each with a
-one-line provenance comment (`installed 2026-09-08, ID from Christine Nguyen /
-Cory Henke email`). Exact snippet text is the vendors' current published base
-code — Developer copies from the official sources, not from memory, and the
-ID strings must be byte-exact as listed above.
+Each block carries a one-line provenance comment (`installed 2026-09-08, ID
+from Christine Nguyen / Cory Henke email`). Exact snippet text is the vendors'
+current published base code — Developer copies from the official sources, not
+from memory, and the ID strings must be byte-exact as listed above.
 
 ## NOT building
 
@@ -67,18 +68,31 @@ ID strings must be byte-exact as listed above.
 
 ## Acceptance criteria
 
-1. `grep -c "fbq('init', '1785155876048905')"` → exactly 1;
-   `grep -c "ttq.load('DAG7S7JC77U70STH6QGG')"` → exactly 1.
-2. Facebook noscript `<img>` present once, with the same ID.
-3. `git diff main <branch> --stat` touches ONLY `docs/index.html`.
-4. Local render: serve `docs/`, fetch `/`, confirm both markers + GA4 still
-   present; page HTML still well-formed (no stray tags around the insert).
-5. Post-merge (Bepop verification, not Developer): live
-   `https://icenovausa.com/` serves both snippets; `curl -sI` on
-   `https://connect.facebook.net/en_US/fbevents.js` and TikTok's
-   `analytics.tiktok.com/i18n/pixel/events.js?pixel_id=<ID>` both resolve.
-6. Vendor-side activation (Christine/Cory, human step, outside this repo):
-   both pixels show Active in Events Manager within ~20 min of deploy.
+1. Occurrence check on `docs/index.html` (literal `grep -o | wc -l`, not
+   `grep -c`, which counts lines): exactly 1 occurrence each of
+   `fbq('init', '1785155876048905')`, `1785155876048905&ev=PageView`,
+   `ttq.load('DAG7S7JC77U70STH6QGG')`, `fbq('track', 'PageView')`, and
+   `ttq.page()`.
+2. GA4 block (lines 30–40) byte-identical to `main` — all three privacy flags
+   intact; `git diff main <branch> --stat` touches ONLY `docs/index.html`.
+3. **Behavioral smoke (required for 'done', not just source-presence):** serve
+   `docs/` locally, load the page in a clean browser context (blockers
+   disabled), confirm zero new JavaScript console errors, and observe via
+   network log / vendor debug tool that BOTH pixel endpoints are actually
+   requested for that visit (Meta `fbevents.js` + `/tr` PageView hit, TikTok
+   `events.js?sdkid=<ID>&lib=ttq` + its collect hit) — one PageView each, no
+   duplicates. Source-retrieval alone does not close this criterion.
+4. Vendor-side activation (Christine/Cory, human step, outside this repo):
+   both pixels show Active in Events Manager for a fresh visit from
+   icenovausa.com within ~20 min of deploy. Remains pending-owned by them;
+   absence of dashboard access is reported as pending, never claimed from
+   curl output.
+5. Post-merge live checks (Bepop verification, not Developer): live
+   `https://icenovausa.com/` serves both snippets; behavioral smoke (criterion
+   3) repeated against production; if retained, any SDK reachability HEAD
+   check uses the URL actually emitted by the copied loader (TikTok loader
+   emits `?sdkid=<ID>&lib=ttq`, not `?pixel_id=<ID>`) and requires an
+   explicit HTTP 2xx — a timeout is reported as unverifiable, not as pass.
 
 ## Verification & rollback
 
