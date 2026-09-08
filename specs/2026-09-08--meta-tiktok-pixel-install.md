@@ -1,10 +1,11 @@
 ---
 title: Meta + TikTok pixel base-code install on icenova-website
-status: draft
+status: approved-locked
 class: B
 date: 2026-09-08
 author: Bepop
 context: IceNova - Meta/TikTok pixel install session
+approvals: R1 t_e37ea612 (NOT_APPROVED, 1 blocker) → R2 t_1bd9bc52 APPROVED at ac7e97a; residuals patched in same pass
 ---
 
 # Spec: Meta + TikTok pixel base-code install on icenova-website
@@ -30,7 +31,7 @@ untouched.
 
 - `docs/index.html` (122 lines), single-page static site served from `docs/` on
   GitHub Pages; deploy on push to `main` via `.github/workflows/deploy-pages.yml`.
-- Existing analytics: GA4 gtag snippet at lines 30–38 (keep as-is, first in order).
+- Existing analytics: GA4 gtag snippet at lines 30–40 (keep as-is, first in order).
 - `docs/site.js` fires custom GA4 events (`product_view`, `store_search`,
   `directions_click`) — out of scope here.
 
@@ -68,7 +69,7 @@ from memory, and the ID strings must be byte-exact as listed above.
 
 ## Acceptance criteria
 
-1. Occurrence check on `docs/index.html` (literal `grep -o | wc -l`, not
+1. Occurrence check on `docs/index.html` (literal `grep -Fo | wc -l`, not
    `grep -c`, which counts lines): exactly 1 occurrence each of
    `fbq('init', '1785155876048905')`, `1785155876048905&ev=PageView`,
    `ttq.load('DAG7S7JC77U70STH6QGG')`, `fbq('track', 'PageView')`, and
